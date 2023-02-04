@@ -20,7 +20,7 @@ player2 = Human_Agent(player=2)
 # player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
 # player2 = AlphaBetaAgent(player = 2,depth = 4)
 player1 = MinMaxAgent2(player = 1,depth = 2, environment=environment)
-player2 = MinMaxAgent2(player = 2,depth = 4, environment=environment)
+player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
 
 def main ():
     run = True

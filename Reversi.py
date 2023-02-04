@@ -53,8 +53,8 @@ class Reversi:
         
         return -1
 
-    def move(self, row_col: tuple[int, int], state: State):
-        row, col = row_col
+    def move(self, action: tuple[int, int], state: State):
+        row, col = action
         directions = (-1 , 0 , 1)
         if state.board[row][col] !=0:
             return False
@@ -70,7 +70,7 @@ class Reversi:
         if legal:
             state.board[row, col] = state.player
             state.switch_player()
-            state.action = row_col
+            state.action = action
         return legal
 
     def is_legal_move(self, row_col, state: State):
@@ -114,4 +114,5 @@ class Reversi:
     def get_next_state(self, action, state:State):
         next_state = state.copy()
         self.move(action, next_state)
+
         return next_state
