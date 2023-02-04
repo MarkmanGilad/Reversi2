@@ -3,8 +3,8 @@ from Graphics import *
 from Reversi import Reversi
 from Human_Agent import Human_Agent
 from MinMaxAgent import MinMaxAgent
+from MinMaxAgent2 import MinMaxAgent2
 
->>>>>>> 33c267c72b988bd57bc7d00460870a25cc51adb8
 import time
 
 FPS = 60
@@ -15,11 +15,12 @@ environment = Reversi()
 graphics = Graphics(win, board = environment.state.board)
 player1 = Human_Agent(player=1)
 player2 = Human_Agent(player=2)
-# player1 = minMaxAgent(player = 1,depth = 3)
+# player1 = minMaxAgent(player = 1,depth = 3, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3)
 # player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
 # player2 = AlphaBetaAgent(player = 2,depth = 4)
-
+player1 = MinMaxAgent2(player = 1,depth = 2, environment=environment)
+player2 = MinMaxAgent2(player = 2,depth = 4, environment=environment)
 
 def main ():
     run = True
