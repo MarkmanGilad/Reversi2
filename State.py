@@ -34,7 +34,7 @@ class State:
         return np.equal(self.board, other.board).all() and self.player == other.player
 
     def __hash__(self) -> int:
-        return hash(repr(self.board) + self.player)
+        return hash(repr(self.board) + repr(self.player))
     
     def copy (self):
         newBoard = np.copy(self.board)

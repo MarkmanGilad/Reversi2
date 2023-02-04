@@ -70,6 +70,7 @@ class Reversi:
         if legal:
             state.board[row, col] = state.player
             state.switch_player()
+            state.action = row_col
         return legal
 
     def is_legal_move(self, row_col, state: State):
@@ -110,7 +111,7 @@ class Reversi:
             return False
         return True
 
-    def get_next_state(self, action, state):
+    def get_next_state(self, action, state:State):
         next_state = state.copy()
         self.move(action, next_state)
         return next_state

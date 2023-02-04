@@ -3,7 +3,7 @@ from Graphics import *
 from Reversi import Reversi
 from Human_Agent import Human_Agent
 from MinMaxAgent import MinMaxAgent
-
+from MinMaxAgent2 import MinMaxAgent2
 import time
 
 FPS = 60
@@ -13,10 +13,10 @@ pygame.display.set_caption('Reversi')
 environment = Reversi()
 graphics = Graphics(win, board = environment.state.board)
 player1 = Human_Agent(player=1)
-player2 = Human_Agent(player=2)
-# player1 = minMaxAgent(player = 1,depth = 3)
+# player2 = Human_Agent(player=2)
+player1 = MinMaxAgent2(player = 1,depth = 2, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3)
-# player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
+player2 = MinMaxAgent2(player = 2,depth = 4, environment=environment)
 # player2 = AlphaBetaAgent(player = 2,depth = 4)
 
 
@@ -36,7 +36,7 @@ def main ():
         action = player.get_Action(event, graphics, environment.state)
         if action:
             if (environment.move(action, environment.state)):
-                graphics.blink(action, GREEN)
+                # graphics.blink(action, GREEN)
                 player = switchPlayers(player)
             else:
                 graphics.blink(action, RED)
@@ -46,7 +46,7 @@ def main ():
         if environment.is_end_of_game(environment.state):
             run = False
     
-    time.sleep(2)
+    # time.sleep(2)
     pygame.quit()
     print("End of game")
     score1, score2 = environment.state.score()

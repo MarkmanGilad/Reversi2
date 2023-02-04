@@ -14,7 +14,7 @@ class MinMaxAgent:
         self.environment : Reversi = environment
 
     def evaluate (self, gameState : State):
-        player_score, opponent_score = gameState.score(player = gameState.player)
+        player_score, opponent_score = gameState.score(player = self.player)
         score =  player_score - opponent_score
         
         for row in range(0, 7):
@@ -30,14 +30,13 @@ class MinMaxAgent:
                     score += 5
                 elif gameState.board[row][col] == self.opponent:
                     score -= 5
+        
         for row in (0,7):
             for col in (0,7):
                 if gameState.board[row][col] == self.player:
                     score += 10
                 elif gameState.board[row][col] == self.opponent:
                     score -= 10
-                
-
 
         return score
 
