@@ -2,7 +2,7 @@ import pygame
 from Graphics import *
 from Reversi import Reversi
 from Human_Agent import Human_Agent
-from MinMaxAgent import MinMaxAgent
+
 
 import time
 
@@ -14,10 +14,6 @@ environment = Reversi()
 graphics = Graphics(win, board = environment.state.board)
 player1 = Human_Agent(player=1)
 player2 = Human_Agent(player=2)
-# player1 = minMaxAgent(player = 1,depth = 3)
-# player1 = AlphaBetaAgent(player = 1,depth = 3)
-# player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
-# player2 = AlphaBetaAgent(player = 2,depth = 4)
 
 
 def main ():
