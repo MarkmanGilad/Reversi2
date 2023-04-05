@@ -1,5 +1,6 @@
 import pygame
 from Graphics import *
+import time
 
 class Human_Agent:
 
@@ -9,7 +10,8 @@ class Human_Agent:
     def get_Action (self, event= None, graphics: Graphics = None, state = None):
         if event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
-            row_col = graphics.calc_row_col(pos) 
+            row_col = graphics.calc_row_col(pos)
+            time.sleep(0.2) 
             return row_col
         else:
             return None

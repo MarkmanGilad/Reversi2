@@ -5,6 +5,8 @@ from Human_Agent import Human_Agent
 from MinMaxAgent import MinMaxAgent
 from MinMaxAgent2 import MinMaxAgent2
 from AlphBetaAgent import AlphaBetaAgent
+from DQN import DQN
+from DQNAgent import DQNAgent
 
 import time
 
@@ -18,10 +20,14 @@ graphics = Graphics(win, board = environment.state.board)
 # player2 = Human_Agent(player=2)
 # player1 = MinMaxAgent(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
-player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
-player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
+# player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
+# player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
-# player2 = AlphaBetaAgent(player = 2,depth = 3, environment=environment)
+# player2 = AlphaBetaAgent(player = 2,depth = 4, environment=environment)
+
+model = DQN(environment)
+player1 = DQNAgent(model, player=1)
+player2 = DQNAgent(model, player=2)
 
 def main ():
     start = time.time()

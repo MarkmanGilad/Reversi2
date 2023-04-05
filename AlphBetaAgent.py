@@ -40,7 +40,7 @@ class AlphaBetaAgent:
 
         return score
 
-    def get_Action(self, event, graphics, state: State):
+    def get_Action(self, event = None, graphics=None, state: State = None):
         visited = set()
         value, bestAction = self.minMax(state, visited)
         return bestAction

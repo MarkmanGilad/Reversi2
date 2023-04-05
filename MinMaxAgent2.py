@@ -41,11 +41,11 @@ class MinMaxAgent2:
         return score
 
     def get_Action(self, event, graphics, state: State):
-        visited = set()
-        value, bestAction = self.minMax(state, visited)
+        value, bestAction = self.minMax(state)
         return bestAction
 
-    def minMax(self, state:State, visited:set):
+    def minMax(self, state:State):
+        visited = set()
         depth = 0
         return self.max_value(state, visited, depth)
         

@@ -1,4 +1,5 @@
 import numpy as np
+import torch
 
 class State:
     def __init__(self, board= None, player = 1) -> None:
@@ -40,3 +41,15 @@ class State:
         newBoard = np.copy(self.board)
         return State(board=newBoard, player=self.player)
     
+    def toTensor (self, device = torch.device('cpu')):
+        array = self.board.reshape(-1)
+        array = np.append(array, self.player)
+        tensor = torch.tensor(array, dtype=torch.float32, device=device)
+        return tensor
+    
+    def tensorToState (self, state_tensor):
+        indexes = torch.arange(64)
+        board = state_tensor[indexes]
+        board = board.reshape([8,8]).numpy()
+        player = state_tensor[64]
+        return State(board, player)

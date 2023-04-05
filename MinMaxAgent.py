@@ -41,11 +41,11 @@ class MinMaxAgent:
         return score
 
     def get_Action(self, event, graphics, gameState):
-        reached = []
+        reached = set()
         value, bestAction = self.minMax(gameState, reached, 0)
         return bestAction
 
-    def minMax(self, gameState, reached, depth):
+    def minMax(self, gameState, reached:set, depth):
         if self.player == gameState.player:
             value = -MAXSCORE
         else:
@@ -56,13 +56,13 @@ class MinMaxAgent:
             value = self.evaluate(gameState)
             return value, None
         
+        # start recursion
         bestAction = None
         legal_actions = self.environment.get_legal_actions(gameState)
-        # start recursion
         for action in legal_actions:
             newGameState = self.environment.get_next_state(action, gameState)
             if newGameState not in reached:
-                reached.append(newGameState)
+                reached.add(newGameState)
                 if self.player == gameState.player:         # maxNode - agent
                     newValue, newAction = self.minMax(newGameState, reached,  depth + 1)
                     if newValue > value:

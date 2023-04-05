@@ -1,6 +1,8 @@
 import numpy as np
+import torch
 from State import State
 from Graphics import *
+
 
 class Reversi:
     def __init__(self, state:State = None) -> None:
@@ -114,5 +116,17 @@ class Reversi:
     def get_next_state(self, action, state:State):
         next_state = state.copy()
         self.move(action, next_state)
-
         return next_state
+    
+    def get_all_next_states (self, state: State):
+        legal_actions = self.get_legal_actions(state)
+        next_states = []
+        for action in legal_actions:
+            next_states.append(self.get_next_state(action, state))
+        return next_states, legal_actions
+    
+    def toTensor (self, list_states, device = torch.device('cpu')):
+        list_tensors = []
+        for state in list_states:
+            list_tensors.append(state.toTensor(device))
+        return torch.vstack(list_tensors)

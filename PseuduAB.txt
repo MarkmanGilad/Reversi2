@@ -1,0 +1,49 @@
+
+function alpah_beta (state):
+    visited = set()
+    depth = 0
+    alpha = -inf
+    beta = inf
+    return max_value (state, visited, depth, alpha, beta)
+
+function max_value (state, visited, depth, alpha, beta):
+    if depth = maxDepth or is_end_of_Game(state):
+        value = evaluate(state) 
+        return value, None
+    value = MinScore
+    bestAction = None
+    for action in legal_actions(state):
+        newState = get_next_state(state, action)
+        if newState in visited:
+            continue
+        visited.add(newState)
+        newValue, newAction = min_value (newState, visited, depth+1, alpha, beta)
+        if newValue  > value:
+            value = newValue
+            bestAction = action
+            alpha = max(alpha, value)
+        if value >= beta:
+            return value, bestAction
+    return value, bestAction
+
+function min_value (state, visited, depth, alpha, beta):
+    if depth = maxDepth or is_end_of_Game(state):
+        value = evaluate(state) 
+        return value, None
+    value = MinScore
+    bestAction = None
+    for action in legal_actions(state):
+        newState = get_next_state(state, action)
+        if newState in visited:
+            continue
+        visited.add(newState)
+        newValue, newAction = min_value (newState, visited, depth+1, alpha, beta)
+        if newValue  < value:
+            value = newValue
+            bestAction = action
+            beta = min(beta, value)
+        if value <= alpha:
+            return value, bestAction
+    return value, bestAction
+
+
