@@ -29,6 +29,15 @@ class State:
         opponent_score = np.count_nonzero(self.board == opponent)
         return player_score, opponent_score
 
+    def reward (self, player):
+        score = self.score(player=player)
+        if score[0]>score[1]:
+            return 1
+        elif score[0]<score[1]:
+            return -1
+        else:
+            return 0
+
     def __eq__(self, other) ->bool:
         b1 = np.equal(self.board, other.board).all()
         b2 = self.player == other.player
@@ -47,9 +56,10 @@ class State:
         tensor = torch.tensor(array, dtype=torch.float32, device=device)
         return tensor
     
-    def tensorToState (self, state_tensor):
+    [staticmethod]
+    def tensorToState (state_tensor):
         indexes = torch.arange(64)
         board = state_tensor[indexes]
-        board = board.reshape([8,8]).numpy()
+        board = board.reshape([8,8]).cpu().numpy()
         player = state_tensor[64]
         return State(board, player)

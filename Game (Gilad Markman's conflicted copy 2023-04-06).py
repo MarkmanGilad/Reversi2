@@ -5,14 +5,11 @@ from Human_Agent import Human_Agent
 from MinMaxAgent import MinMaxAgent
 from MinMaxAgent2 import MinMaxAgent2
 from AlphBetaAgent import AlphaBetaAgent
-from DQN import DQN
-from DQNAgent import DQNAgent
-from State import State
 
 import time
 
 FPS = 60
-file='DQN_Model.pth'
+
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Reversi')
 environment = Reversi()
@@ -25,11 +22,6 @@ player1 = Human_Agent(player=1)
 # player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
 player2 = AlphaBetaAgent(player = 2,depth = 4, environment=environment)
-
-# model = DQN(environment)
-# player1 = DQNAgent(model, player=1)
-# player1.loadModel(file)
-# player2 = DQNAgent(model, player=2)
 
 def main ():
     start = time.time()
@@ -56,15 +48,9 @@ def main ():
         graphics.draw()
         pygame.display.update()
         if environment.is_end_of_game(environment.state):
-            # run = False
-            score1, score2 = environment.state.score()
-            print ("player 1: score = ", score1)
-            print ("player 2: score = ", score2)
-            print(environment.state.reward(1))
-            time.sleep(2)
-            environment.state = environment.get_init_state()
-            graphics.board = environment.state.board
-    time.sleep(2) 
+            run = False
+    
+    # time.sleep(2)
     pygame.quit()
     print("End of game")
     score1, score2 = environment.state.score()

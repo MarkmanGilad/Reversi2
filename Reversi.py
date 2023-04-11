@@ -11,7 +11,7 @@ class Reversi:
         else:
             self.state = state
 
-    def get_init_state(self, Rows_Cols):
+    def get_init_state(self, Rows_Cols = (ROWS, COLS)):
         rows, cols = Rows_Cols
         board = np.zeros([rows, cols],int)
         board[3][3] = 1
@@ -130,3 +130,13 @@ class Reversi:
         for state in list_states:
             list_tensors.append(state.toTensor(device))
         return torch.vstack(list_tensors)
+    
+    def reward (self, state, action):
+        # if not self.is_legal_move(action, state):
+        #     return 0
+        
+        next_state = self.get_next_state(action, state)
+        if (self.is_end_of_game(next_state)):
+            return next_state.score(state.player)
+            
+        return 0

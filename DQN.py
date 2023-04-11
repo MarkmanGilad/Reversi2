@@ -8,27 +8,28 @@ from Reversi import Reversi
 
 
 # Parameters
-learning_rate = 0.01
+
 input_size = 65 # state: board = 8 * 8 + palyer = 1
 layer1 = 128
 layer2 = 64
 output_size = 1 # V(state)
-epoch = 100
-batch_size = 64
-gamma = 0.99 
+# epochs = 1000
+# batch_size = 64
+gamma = 1 
 
 # epsilon Greedy
 epsilon_start = 1.0
 epsilon_final = 0.01
-epsiln_decay = 500
+epsiln_decay = 10000
 
+MSELoss = nn.MSELoss()
 
 class DQN (nn.Module):
     def __init__(self, env) -> None:
         super().__init__()
         self.env = env 
         if torch.cuda.is_available:
-            self.device = torch.device('cuda')
+            self.device = torch.device('cpu') # 'cuda'
         else:
             self.device = torch.device('cpu')
         
@@ -44,8 +45,10 @@ class DQN (nn.Module):
         x = self.output(x)
         return x
     
-    def act (self, state, epsilon = 0):
-        if random.random() < epsilon:
+    def act (self, state, epoch = 1, train = True):
+        epsilon = epsilon_greedy(epoch)
+        rnd = random.random()
+        if rnd < epsilon and train:
             actions = self.env.get_legal_actions(state)
             action = random.choice(actions)
             next_state = self.env.get_next_state(action, state)
@@ -58,6 +61,12 @@ class DQN (nn.Module):
         return states_tensor[maxIndex], legal_actions[maxIndex]
     
 
+    def loss (self, Q_value, rewards, Q_next_Values, Dones ):
+        Q_new = rewards + gamma * Q_next_Values * (1- Dones)
+        return MSELoss(Q_value, Q_new)
+        
+
 def epsilon_greedy(epoch, start = epsilon_start, final=epsilon_final, decay=epsiln_decay):
-    return final + (start - final) * math.exp(-1 * epoch/decay)
+    res = final + (start - final) * math.exp(-1 * epoch/decay)
+    return res
         
