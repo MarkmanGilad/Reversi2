@@ -2,6 +2,7 @@ from collections import deque
 import random
 import torch
 
+capacity = 10000
 
 class ReplayBuffer:
     def __init__(self, capacity= 10000) -> None:

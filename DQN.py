@@ -20,7 +20,7 @@ gamma = 1
 # epsilon Greedy
 epsilon_start = 1.0
 epsilon_final = 0.01
-epsiln_decay = 10000
+epsiln_decay = 500000
 
 MSELoss = nn.MSELoss()
 
@@ -39,12 +39,12 @@ class DQN (nn.Module):
         
     def forward (self, x):
         x = self.linear1(x)
-        x = F.relu(x)
+        x = F.leaky_relu(x)
         x = self.linear2(x)
-        x = F.relu(x)
+        x = F.leaky_relu(x)
         x = self.output(x)
         return x
-    
+
     def act (self, state, epoch = 1, train = True):
         epsilon = epsilon_greedy(epoch)
         rnd = random.random()
@@ -64,7 +64,6 @@ class DQN (nn.Module):
     def loss (self, Q_value, rewards, Q_next_Values, Dones ):
         Q_new = rewards + gamma * Q_next_Values * (1- Dones)
         return MSELoss(Q_value, Q_new)
-        
 
 def epsilon_greedy(epoch, start = epsilon_start, final=epsilon_final, decay=epsiln_decay):
     res = final + (start - final) * math.exp(-1 * epoch/decay)

@@ -30,13 +30,14 @@ class State:
         return player_score, opponent_score
 
     def reward (self, player):
-        score = self.score(player=player)
-        if score[0]>score[1]:
-            return 1
-        elif score[0]<score[1]:
-            return -1
-        else:
-            return 0
+        scores = self.score(player=player)
+        return scores[0]-scores[1] 
+        # if scores[0]>scores[1]:
+        #     return 1
+        # elif scores[0]<scores[1]:
+        #     return -1
+        # else:
+        #     return 0
 
     def __eq__(self, other) ->bool:
         b1 = np.equal(self.board, other.board).all()

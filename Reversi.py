@@ -18,7 +18,7 @@ class Reversi:
         board[3][4] = 2
         board[4][3] = 2
         board[4][4] = 1
-        return State (board, 1)
+        return State (board, player=1)
 
     def is_free(self, row_col: tuple[int, int], state: State):
         row, col = row_col
