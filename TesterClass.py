@@ -1,4 +1,9 @@
 import torch
+from RandomAgent import RandomAgent
+from FixAgent import FixAgent
+from DQN import DQN
+from DQNAgent import DQNAgent
+from Reversi import Reversi
 
 class tester:
 
@@ -6,14 +11,15 @@ class tester:
         self.env = env
         self.player1 = player1
         self.player2 = player2
+        
 
-    def test (self):
+    def test (self, games_num):
         env = self.env
         player = self.player1
         player1_win = 0
         player2_win = 0
         games = 0
-        while games < 100:
+        while games < games_num:
             action = player.get_Action(state=env.state)
             env.move(action, env.state)
             player = self.switchPlayers(player)
@@ -25,7 +31,7 @@ class tester:
                     player2_win += 1
                 env.state = env.get_init_state()
                 games += 1
-        
+                player = self.player1
         return player1_win, player2_win        
 
     def switchPlayers(self, player):
@@ -35,5 +41,12 @@ class tester:
             return self.player1
 
 if __name__ == '__main__':
-    tester.test()
+    env = Reversi()
+    # player2 = FixAgent(env, player=2)
+    player2 = RandomAgent(env)
+    file = 'DQN_Model_W_Fix3.pth'
+    model = torch.load(file)
+    player1 = DQNAgent(model, player=1, train=False)
+    test = tester(env,player1, player2)
+    print(test.test())
     

@@ -24,7 +24,6 @@ def main ():
     player1 = player_White
     player2 = player_Black
 
-
     buffer_White = ReplayBuffer()
     buffer_Black = ReplayBuffer()
     buffer1 = buffer_White

@@ -9,11 +9,13 @@ from DQN import DQN
 from DQNAgent import DQNAgent
 from State import State
 from RandomAgent import RandomAgent
+from FixAgent import FixAgent
+from FixAgent2 import FixAgent2
 import time
 import torch
 
 FPS = 60
-file='DQN_Model.pth'
+file='Python/Reversi/Data/DQN_Model_best_eval_LREelu_Point_alphaBeta.pth'
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Reversi')
 environment = Reversi()
@@ -25,14 +27,18 @@ graphics = Graphics(win, board = environment.state.board)
 # player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
-# player2 = AlphaBetaAgent(player = 2,depth = 4, environment=environment)
+player2 = AlphaBetaAgent(player = 2,depth = 3, environment=environment)
 # player1 = RandomAgent(environment)
 # player2 = RandomAgent(environment)
+# player1 = FixAgent(environment, player=1)
+# player2 = FixAgent(environment, player=2)
+# player1 = FixAgent2(environment, player=1)
+# player2 = FixAgent2(environment, player=2)
 
 model = DQN(environment)
 model = torch.load(file)
-player1 = DQNAgent(model, player=1)
-player2 = DQNAgent(model, player=2)
+player1 = DQNAgent(model, player=1, train=False)
+# player2 = DQNAgent(model, player=2)
 
 def main ():
     start = time.time()

@@ -19,8 +19,8 @@ class DQNAgent:
             _, action = self.model.act(state, epoch, train = True)
         return action
 
-    def get_state_action (self, event = None, graphics=None, state: State = None, epoch = 0):
-        return self.model.act(state, epoch)
+    def get_state_action (self, event = None, graphics=None, state: State = None, epoch = 0, train = True):
+        return self.model.act(state, epoch, train=train)
         
 
     def loadModel (self, file):

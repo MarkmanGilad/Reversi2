@@ -19,8 +19,8 @@ gamma = 1
 
 # epsilon Greedy
 epsilon_start = 1.0
-epsilon_final = 0.01
-epsiln_decay = 500000
+epsilon_final = 0.02
+epsiln_decay = 100000
 
 MSELoss = nn.MSELoss()
 
@@ -45,7 +45,7 @@ class DQN (nn.Module):
         x = self.output(x)
         return x
 
-    def act (self, state, epoch = 1, train = True):
+    def act (self, state, epoch = 0, train = True):
         epsilon = epsilon_greedy(epoch)
         rnd = random.random()
         if rnd < epsilon and train:

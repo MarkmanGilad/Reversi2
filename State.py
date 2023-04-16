@@ -31,7 +31,7 @@ class State:
 
     def reward (self, player):
         scores = self.score(player=player)
-        return scores[0]-scores[1] 
+        return (scores[0]-scores[1])/ 100.0
         # if scores[0]>scores[1]:
         #     return 1
         # elif scores[0]<scores[1]:

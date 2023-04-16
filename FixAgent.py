@@ -36,7 +36,7 @@ class FixAgent:
         maxIndex = values.index(max(values))
         return legal_actions[maxIndex]
 
-    def get_state_action(self, event = None, graphics=None, state: State = None, epoch = 0):
+    def get_state_action(self, event = None, graphics=None, state: State = None, epoch = 0, train = False):
         next_states, legal_actions = self.env.get_all_next_states(state)
         values = []
         for next_state in next_states:

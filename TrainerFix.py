@@ -8,17 +8,16 @@ import torch
 
 buffer = ReplayBuffer()
 epochs = 1500000
-learning_rate = 0.1
+learning_rate = 0.01
 batch_size = 64
 env = Reversi()
+iter_number = 1
 
 model = DQN(env)
-file='DQN_Model_W_Fix1.pth'
+file='DQN_Model_W_Fix3.pth'
 model = torch.load(file)
 player1 = DQNAgent(model, player=1)
 player2 = FixAgent(env, player=2)
-
-
 
 def main ():
 
@@ -40,7 +39,7 @@ def main ():
         next_state, _ = player2.get_state_action(state=State.tensorToState(state_Q), epoch=0)
         final_state_s = State.tensorToState(next_state)
         if env.is_end_of_game(final_state_s):
-            state = end_of_game(final_state_s, state_Q, next_state_Q)
+            state = end_of_game(final_state_s, state_Q, state_Q)
             continue
 
         next_state_Q, _ = player1.get_state_action(state=State.tensorToState(next_state), epoch=0)
@@ -70,23 +69,24 @@ def main ():
 
         states_Q, rewards, next_states_Q, dones = buffer.sample(batch_size)
         
-        # zero wights
-        optim.zero_grad()
+        for iter in range(iter_number):
+            # zero wights
+            optim.zero_grad()
 
-        # forward
-        Q_value = model.forward(states_Q)
-        with torch.no_grad():
-            Q_next_value = model.forward(next_states_Q)
+            # forward
+            Q_value = model.forward(states_Q)
+            with torch.no_grad():
+                Q_next_value = model.forward(next_states_Q)
 
-        #backward()
-        loss = model.loss(Q_value, rewards, Q_next_value, dones)
-        loss.backward()
+            #backward()
+            loss = model.loss(Q_value, rewards, Q_next_value, dones)
+            loss.backward()
 
-        if epoch % 1000 == 0:
-            print (f'epochs: {epoch} loss: {loss}')
+            if epoch % 1000 == 0 and iter == iter_number-1:
+                print (f'epochs: {epoch} loss: {loss}')
 
-        # update wights
-        optim.step()
+            # update wights
+            optim.step()
 
     print (len(buffer))
     
