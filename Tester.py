@@ -15,21 +15,21 @@ environment = Reversi()
 # player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
 # player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
-player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
-# player2 = AlphaBetaAgent(player = 2,depth = 3, environment=environment)
+# player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
+# player2 = AlphaBetaAgent(player = 2,depth = 2, environment=environment)
 # player1 = RandomAgent(environment)
 # player2 = RandomAgent(environment)
-# player1 = FixAgent(environment, player=1)
-# player2 = FixAgent(environment, player=2)
-# player1 = FixAgent2(environment, player=1)
-# player2 = FixAgent2(environment, player=2)
+# player1 = FixAgent(environment, player=1, train=True)
+player2 = FixAgent(environment, player=2, train=True)
+# player1 = FixAgent2(environment, player=1, train=False)
+# player2 = FixAgent2(environment, player=2,train=True)
 
-# file='Reversi/Data/DQN_Model_AI_AI_best_eval_W.pth'
-file='Reversi/Data/DQN_Model_AI_AI_best_eval_B.pth'
+file='Python/Reversi/Data/DQN_Model_best_Fix_Rnd_Gamma_4.pth'
+# file='Python/Reversi/Data/DQN_Model_best_Fix_Rnd_Gamma_12.pth'
 # model = DQN(environment)
 model = torch.load(file)
-# player1 = DQNAgent(model, player=1, train=False)
-player2 = DQNAgent(model, player=2, train=False)
+player1 = DQNAgent(model, player=1, train=False)
+# player2 = DQNAgent(model, player=2, train=False)
 
 # fileWhite='DQN_model_White.pth'
 # model_White = torch.load(fileWhite)
@@ -51,7 +51,7 @@ def main ():
         player = switchPlayers(player)
         if environment.is_end_of_game(environment.state):
             score1, score2 = environment.state.score()
-            print ("player 1: score = ", score1, "player 2: score = ", score2 )
+            print ("player 1: score = ", score1, "player 2: score = ", score2, end = '\r')
             if score1 > score2:
                 player1_win += 1
             else:

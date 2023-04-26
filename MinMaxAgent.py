@@ -74,5 +74,9 @@ class MinMaxAgent:
                         value = newValue
                         bestAction = action
 
-        return value, bestAction 
+        if bestAction:
+            return value, bestAction 
+        else:
+            return -value, bestAction
+ 
 

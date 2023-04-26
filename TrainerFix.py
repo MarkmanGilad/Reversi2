@@ -14,7 +14,7 @@ env = Reversi()
 iter_number = 1
 
 model = DQN(env)
-file='DQN_Model_W_Fix3.pth'
+file='DQN_Model_W_Fix.pth'
 model = torch.load(file)
 player1 = DQNAgent(model, player=1)
 player2 = FixAgent(env, player=2)

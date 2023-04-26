@@ -76,7 +76,10 @@ class AlphaBetaAgent:
                     return value, bestAction
                     
 
-        return value, bestAction 
+        if bestAction:    
+            return value, bestAction 
+        else:               # happend when all child states are in visited. return maxScore
+            return MAXSCORE, bestAction
 
     def min_value (self, state:State, visited:set, depth, alpha, beta):
         
@@ -102,9 +105,15 @@ class AlphaBetaAgent:
                 if value <= alpha:
                     return value, bestAction
 
-        return value, bestAction 
+        if bestAction:
+            return value, bestAction 
+        else:
+            return -MAXSCORE, bestAction
+ 
 
     def get_state_action (self, event = None, graphics=None, state: State = None, epoch = 0, train = False):
         action = self.get_Action(state = state)
+        if action == None:
+            print (state)
         next_state = self.environment.get_next_state(action, state)
         return next_state.toTensor(), action

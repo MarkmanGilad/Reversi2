@@ -29,9 +29,9 @@ class State:
         opponent_score = np.count_nonzero(self.board == opponent)
         return player_score, opponent_score
 
-    def reward (self, player):
+    def reward (self, player = 1):
         scores = self.score(player=player)
-        return (scores[0]-scores[1])/ 100.0
+        return (scores[0]-scores[1])/ 10.0
         # if scores[0]>scores[1]:
         #     return 1
         # elif scores[0]<scores[1]:
@@ -62,5 +62,5 @@ class State:
         indexes = torch.arange(64)
         board = state_tensor[indexes]
         board = board.reshape([8,8]).cpu().numpy()
-        player = state_tensor[64]
+        player = state_tensor[64].item()
         return State(board, player)

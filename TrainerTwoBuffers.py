@@ -22,29 +22,27 @@ env = Reversi()
 testEnv = Reversi()
 
 model = DQN(env)
-# model = DQN_tanh(env)
-# model = DQN_Sigmoid(env)
-file='Reversi/Data/DQN_Model_Fix_eval_LREelu_Point_alphaBeta.pth'
-file_best='Reversi/Data/DQN_Model_best_eval_LREelu_Point_alphaBeta.pth'
-fileRes = "Reversi/Data/Results_eval_LREelu_Point_alphaBeta.pth"
+file='Reversi/Data/DQN_Model_Fix_Rnd.pth'
+file_best='Reversi/Data/DQN_Model_best_Fix_Rnd.pth'
+fileRes = "Reversi/Data/Results_eval_Fix_Rnd.pth"
 
-model = torch.load("Data/DQN_Model_Fix_eval_LREelu_Point.pth")
+model = torch.load("Reversi/Data/DQN_Model_Fix_Rnd.pth")
 player1 = DQNAgent(model, player=1)
-playerFix = FixAgent(env, player=2)
-playerRand = RandomAgent(env)
-playerFix2 = FixAgent2(env, player=2)
-playerAlphBeta = AlphaBetaAgent(player=2, depth=3, environment=env)
-player2 = playerAlphBeta
+playerFix = FixAgent(env, player=2, train=True)
+# playerRand = RandomAgent(env)
+# playerFix2 = FixAgent2(env, player=2)
+# playerAlphBeta = AlphaBetaAgent(player=2, depth=3, environment=env)
+player2 = playerFix
 
 playerTest = DQNAgent(model, player=1, train=False)
 testFix = tester(env, playerTest, playerFix)
-testFix2 = tester(env, playerTest, playerFix2)
-testRnd = tester(env, playerTest, playerRand)
+# testFix2 = tester(env, playerTest, playerFix2)
+# testRnd = tester(env, playerTest, playerRand)
 results = []
 # results = torch.load(fileRes)
 
 def main ():
-    bestRnd = -100 
+    bestRnd = 0 
     Games = 0
     loss = 0
     # init optimizer
@@ -55,18 +53,18 @@ def main ():
     for epoch in range(epochs+1):
         
         if (epoch) % 10000 == 0:
-            resFix = testFix.test(1)
-            resFix2 = testFix2.test(1)
-            resRnd = testRnd.test(100)
+            resFix = testFix.test(100)
+            # resFix2 = testFix2.test(1)
+            # resRnd = testRnd.test(100)
             print (f'testFix: {resFix}')
-            print (f'testFix2: {resFix2}')
-            print (f'testRand: {resRnd}')
-            results.append({'ephocs': epoch+1, 'fix': resFix, 'fix2':resFix2 ,'rnd': resRnd, 'loss': loss })
+            # print (f'testFix2: {resFix2}')
+            # print (f'testRand: {resRnd}')
+            results.append({'ephocs': epoch+1, 'fix': resFix, 'loss': loss })
             torch.save(model, file)        
             torch.save(results, fileRes)
             
-            if resFix[0]*100 + resFix2[0]* 100 + (resRnd[0]-resRnd[1]) > bestRnd:
-                bestRnd = resFix[0]*100 + resFix2[0]* 100 + (resRnd[0]-resRnd[1])
+            if resFix[0] > bestRnd:
+                bestRnd = resFix[0]
                 torch.save(model, file_best) 
                 print (f'save. epochs: {epoch} loss: {loss}')
         
@@ -105,8 +103,7 @@ def main ():
       
         state = next_state
         
-        if epoch % 100 == 0:
-            print (f'epochs: {epoch}', end="\r")
+        print (f'epochs: {epoch}', end="\r")
         
         if len(buffer) < 500:
             continue

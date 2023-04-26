@@ -64,21 +64,6 @@ def main ():
                 bestRnd = resFix[0]*100 + resFix2[0]* 100 + (resRnd[0]-resRnd[1])
                 torch.save(model, file_best) 
                 print (f'save. epochs: {epoch} loss: {loss}')
-                
-        
-        # if Games % 50 == 0:
-        #     if epoch % 10 == 0:
-        #         player2 = playerRand
-        #     else:
-        #         if random.random() < 0.6:
-        #             player2 = playerFix
-        #         else:
-        #             player2 = playerFix2    
-        # else:
-        #     if random.random() < 0.6:
-        #         player2 = playerFix
-        #     else:
-        #         player2 = playerFix2
         
         reward = 0    
 

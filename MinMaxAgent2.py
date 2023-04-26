@@ -70,7 +70,11 @@ class MinMaxAgent2:
                     value = newValue
                     bestAction = action
 
-        return value, bestAction 
+        if bestAction:
+            return value, bestAction 
+        else:
+            return MAXSCORE, bestAction
+  
 
     def min_value (self, state:State, visited:set, depth):
         
@@ -93,5 +97,9 @@ class MinMaxAgent2:
                     value = newValue
                     bestAction = action
 
-        return value, bestAction 
+        if bestAction:
+            return value, bestAction 
+        else:
+            return -MAXSCORE, bestAction
+ 
 

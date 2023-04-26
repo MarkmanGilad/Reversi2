@@ -15,8 +15,8 @@ buffer_W = ReplayBuffer()
 buffer_W_EOG = ReplayBuffer()
 buffer_B = ReplayBuffer()
 buffer_B_EOG = ReplayBuffer()
-epochs = 3000000
-learning_rate = 0.01
+epochs = 10000000
+learning_rate = 0.001
 batch_size = 64
 batch_size_EOG = 64
 env = Reversi()
@@ -34,8 +34,8 @@ file_B='Data/DQN_Model_AI_AI_B.pth'
 file_best_B='Data/DQN_Model_AI_AI_best_eval_B.pth'
 fileRes_B = "Data/Results_AI_AI_B.pth"
 
-# model_W = torch.load("Data/DQN_Model_AI_AI_W.pth")
-# model_B = torch.load("Data/DQN_Model_AI_AI_B.pth")
+model_W = torch.load("Data/DQN_Model_AI_AI_W.pth")
+model_B = torch.load("Data/DQN_Model_AI_AI_B.pth")
 
 player_W = DQNAgent(model_W, player=1)
 player_B = DQNAgent(model_B, player=2)
@@ -52,7 +52,7 @@ playerTest_B = DQNAgent(model_B, player=2, train=False)
 testFix_W = tester(env, playerTest_W, playerFix_B)
 testFix2_W = tester(env, playerTest_W, playerFix2_B)
 testFix_B = tester(env, playerFix_W, playerTest_B)
-testFix2_B = tester(env,playerFix_W, playerTest_B)
+testFix2_B = tester(env,playerFix2_W, playerTest_B)
 testRnd_W = tester(env, playerTest_W, playerRand)
 testRnd_B = tester(env, playerRand, playerTest_B)
 results_W = []
@@ -96,7 +96,7 @@ def main ():
         
         if (epoch) % 10000 == 0:
             saveModels(epoch, loss)
-            
+        # switch players & models
         player1, player2 = player2, player1
         optim1, optim2 = optim2, optim1
         buffer1, buffer2 = buffer2, buffer1
@@ -115,16 +115,11 @@ def main ():
             next_state, _ = player2.get_state_action(state=State.tensorToState(state_Q), epoch=epoch)
             next_state_Q, _ = player1.get_state_action(state=State.tensorToState(next_state), epoch=epoch)
             Games += 1
-            player2 = player_W
-            player1 = player_B
-            buffer2 = buffer_W
-            buffer1 = buffer_B
-            buffer2_EOG = buffer_W_EOG
-            buffer1_EOG = buffer_B_EOG
-            model2 = model_W
-            model1 = model_B    
-            optim2 = optim_W
-            optim1 = optim_B
+            player2, player1 = player_W, player_B
+            buffer2, buffer1 = buffer_W, buffer_B
+            buffer2_EOG, buffer1_EOG = buffer_W_EOG, buffer_B_EOG
+            model2, model1 = model_W, model_B
+            optim2, optim1 = optim_W, optim_B
             continue
        
         buffer1.push(state_Q, torch.tensor(reward, dtype=torch.float32), next_state_Q, False)

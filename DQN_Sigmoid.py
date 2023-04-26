@@ -13,14 +13,12 @@ input_size = 65 # state: board = 8 * 8 + palyer = 1
 layer1 = 128
 layer2 = 64
 output_size = 1 # V(state)
-# epochs = 1000
-# batch_size = 64
-gamma = 1 
+gamma = 0.98 
 
 # epsilon Greedy
 epsilon_start = 1.0
 epsilon_final = 0.01
-epsiln_decay = 100000
+epsiln_decay = 500000
 
 MSELoss = nn.MSELoss()
 
@@ -39,9 +37,9 @@ class DQN_Sigmoid (nn.Module):
         
     def forward (self, x):
         x = self.linear1(x)
-        x = torch.sigmoid(x)
+        x = F.leaky_relu(x)
         x = self.linear2(x)
-        x = torch.sigmoid(x)
+        x = F.leaky_relu(x)
         x = self.output(x)
         x = torch.sigmoid(x)
         return x
