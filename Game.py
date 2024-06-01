@@ -15,19 +15,19 @@ import time
 import torch
 
 FPS = 60
-file='Python/Reversi/Data/DQN_Model_best_AB_3.pth'
+file='Data/DQN_Model_AB_3.pth'
 win = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Reversi')
 environment = Reversi()
 graphics = Graphics(win, board = environment.state.board)
-# player1 = Human_Agent(player=1)
-# player2 = Human_Agent(player=2)
+player1 = Human_Agent(player=1)
+player2 = Human_Agent(player=2)
 # player1 = MinMaxAgent(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent(player = 2,depth = 3, environment=environment)
 # player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
-player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
-player2 = AlphaBetaAgent(player = 2,depth = 3, environment=environment)
+# player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
+# player2 = AlphaBetaAgent(player = 2,depth = 3, environment=environment)
 # player1 = RandomAgent(environment)
 # player2 = RandomAgent(environment)
 # player1 = FixAgent(environment, player=1)

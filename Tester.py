@@ -16,15 +16,15 @@ environment = Reversi()
 # player1 = MinMaxAgent2(player = 1,depth = 3, environment=environment)
 # player2 = MinMaxAgent2(player = 2,depth = 3, environment=environment)
 # player1 = AlphaBetaAgent(player = 1,depth = 3, environment=environment)
-# player2 = AlphaBetaAgent(player = 2,depth = 2, environment=environment)
+player2 = AlphaBetaAgent(player = 2,depth = 2, environment=environment)
 # player1 = RandomAgent(environment)
 # player2 = RandomAgent(environment)
 # player1 = FixAgent(environment, player=1, train=True)
-player2 = FixAgent(environment, player=2, train=True)
+# player2 = FixAgent(environment, player=2, train=True)
 # player1 = FixAgent2(environment, player=1, train=False)
 # player2 = FixAgent2(environment, player=2,train=True)
 
-file='Python/Reversi/Data/DQN_Model_best_Fix_Rnd_Gamma_4.pth'
+file='Reversi/Data/DQN_Model_AB_3.pth'
 # file='Python/Reversi/Data/DQN_Model_best_Fix_Rnd_Gamma_12.pth'
 # model = DQN(environment)
 model = torch.load(file)

@@ -70,7 +70,7 @@ def main ():
 
         states_Q, rewards, next_states_Q, dones = buffer.sample(batch_size)
         
-        # zero wights
+        # zero grads
         optim.zero_grad()
 
         # forward

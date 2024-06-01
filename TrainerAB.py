@@ -21,9 +21,9 @@ env = Reversi()
 testEnv = Reversi()
 
 model = DQN(env)
-file='Reversi/Data/DQN_Model_AB_3.pth'
-file_best='Reversi/Data/DQN_Model_best_AB_3.pth'
-fileRes = "Reversi/Data/Results_eval_AB_3.pth"
+file='Data/DQN_Model_AB_3.pth'
+file_best='Data/DQN_Model_best_AB_3.pth'
+fileRes = "Data/Results_eval_AB_3.pth"
 
 # model = torch.load(file)
 player1 = DQNAgent(model, player=1)

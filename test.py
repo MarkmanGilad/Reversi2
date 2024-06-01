@@ -3,7 +3,7 @@ import torch
 import math
 import matplotlib.pyplot as plt
 
-results_W = torch.load('Python/Reversi/Data/Results_eval_Fix_Rnd_Gamma_4.pth')
+results_W = torch.load('Reversi/Data/Results_eval_AB_3.pth')
 # results_W = torch.load('Python/Reversi/Data/Results_eval_Fix_Rnd_Gamma_12.pth')
 # results_W = torch.load('Python/Reversi/Data/Results_eval_Fix_Rnd.pth')
 # results_B = torch.load('Reversi/Data/Results_AI_AI_B.pth')
@@ -17,9 +17,9 @@ results = [0]
 
 for res in results_W:
     print (res)
-    score = (res['fix'][0]+res['fix2'][0])/2
+    # score = (res['fix'][0]+res['fix2'][0])/2
     # score = res['fix'][0] *30 + res['fix2'][0]*30 + res['rnd'][0]- res['rnd'][1]
-    # score = res['fix'][0]
+    score = res['fix'][0]
     results.append(score)
     
     if  score > maxScore_W:

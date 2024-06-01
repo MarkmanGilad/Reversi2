@@ -20,13 +20,10 @@ class ReplayBuffer:
         rewards = torch.vstack(reward_tensors)
         next_states = torch.vstack(next_state_tensors)
         done_tensor = torch.tensor(dones).long().reshape(-1,1)
-        
         return states, rewards, next_states, done_tensor
-
 
     def merge_samples (self, sample1, sample2):
         return torch.cat((sample1, sample2), 0)
-
     
     def __len__(self):
         return len(self.buffer)
